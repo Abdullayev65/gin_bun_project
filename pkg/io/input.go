@@ -5,7 +5,6 @@ type Sign struct {
 	Password string `json:"password"`
 }
 type PostInput struct {
-	Title       string `json:"title"`
 	Description string `json:"description"`
 }
 type CommentInput struct {

@@ -25,7 +25,7 @@ type App struct {
 func New() *App {
 	db, ctx := database(false)
 	s := service.New(db, ctx)
-	t := utill.NewToken("salat", time.Hour)
+	t := utill.NewToken("salat", time.Hour*6)
 	return &App{handler: hendler.New(s, t)}
 }
 
@@ -57,7 +57,8 @@ func (a *App) initRouters() *gin.Engine {
 	}
 	post := router.Group("/post")
 	{
-		post.POST("/", a.handler.PostAdd)
+		post.POST("/", a.handler.ParseTokenAndRequiredSetUserID,
+			a.handler.PostAdd)
 		post.GET("/", a.handler.PostAll)
 		post.GET("/:id", a.handler.PostGet)
 		post.PUT("/:id", a.handler.PostUpdate)

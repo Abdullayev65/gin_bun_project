@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"github.com/Abdullayev65/gin_bun_project/pkg/models"
 )
 
@@ -28,8 +27,7 @@ func (s *Service) UserAll() []models.User {
 }
 
 func (s *Service) UserUpdate(user *models.User) error {
-	res, err := s.DB.NewUpdate().Model(user).WherePK().Exec(s.ctx)
-	fmt.Println(res)
+	_, err := s.DB.NewUpdate().Model(user).WherePK().Exec(s.ctx)
 	if err != nil {
 		return err
 	}

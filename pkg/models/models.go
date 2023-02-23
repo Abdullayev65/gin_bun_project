@@ -9,15 +9,15 @@ type User struct {
 }
 
 type Post struct {
-	ID          int64
+	ID          int64 `bun:",pk,autoincrement"`
 	Description string
 	UserID      int64
-	CreatedAt   time.Time
+	CreatedAt   time.Time `bun:",nullzero,notnull,default:current_timestamp"`
 }
 
 type Comment struct {
-	ID     int64
-	Text   string
+	ID     int64  `bun:",pk,autoincrement"`
+	Text   string `bun:",nullzero,notnull"`
 	UserID int64
 	PostID int64
 }
