@@ -3,8 +3,8 @@ package models
 import "time"
 
 type User struct {
-	ID       int64
-	Username string
+	ID       int64  `bun:",pk,autoincrement"`
+	Username string `bun:",unique,notnull"`
 	Password string
 }
 
