@@ -65,6 +65,16 @@ func (a *App) initRouters() *gin.Engine {
 		post.DELETE("/:id", a.handler.PostDelete)
 	}
 
+	comment := router.Group("/comment")
+	{
+		comment.POST("/", a.handler.ParseTokenAndRequiredSetUserID,
+			a.handler.CommentAdd)
+		comment.GET("/", a.handler.CommentAll)
+		comment.GET("/:id", a.handler.CommentGet)
+		comment.PUT("/:id", a.handler.CommentUpdate)
+		comment.DELETE("/:id", a.handler.CommentDelete)
+	}
+
 	return router
 }
 
@@ -80,6 +90,7 @@ func database(resetModel bool) (*bun.DB, context.Context) {
 	if resetModel {
 		db.ResetModel(ctx, (*models.User)(nil))
 		db.ResetModel(ctx, (*models.Post)(nil))
+		db.ResetModel(ctx, (*models.Comment)(nil))
 	}
 	return db, ctx
 }

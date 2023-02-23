@@ -12,21 +12,23 @@ func (s *Service) PostAdd(post *models.Post) error {
 	return nil
 }
 func (s *Service) PostGet(id int64) (*models.Post, error) {
-	user := &models.Post{ID: id}
-	err := s.DB.NewSelect().Model(user).WherePK().Scan(s.ctx)
+	post := &models.Post{ID: id}
+	err := s.DB.NewSelect().Model(post).WherePK().Scan(s.ctx)
 	if err != nil {
 		return nil, err
 	}
-	return user, nil
+	return post, nil
 }
 func (s *Service) PostAll() []models.Post {
-	var users []models.Post
-	s.DB.NewSelect().Model(&users).Scan(s.ctx)
-	return users
+	var posts []models.Post
+	s.DB.NewSelect().Model(&posts).Scan(s.ctx)
+	return posts
 }
 
-func (s *Service) PostUpdate(user *models.Post) error {
-	_, err := s.DB.NewUpdate().Model(user).WherePK().Exec(s.ctx)
+func (s *Service) PostUpdate(post *models.Post) error {
+	_, err := s.DB.NewUpdate().Model(post).
+		Column("description").
+		WherePK().Exec(s.ctx)
 	if err != nil {
 		return err
 	}
