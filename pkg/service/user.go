@@ -11,7 +11,7 @@ func (s *Service) UserAdd(user *models.User) error {
 	}
 	return nil
 }
-func (s *Service) UserGet(id int64) (*models.User, error) {
+func (s *Service) UserGet(id int) (*models.User, error) {
 	user := &models.User{ID: id}
 	err := s.DB.NewSelect().Model(user).WherePK().Scan(s.ctx)
 	if err != nil {
@@ -33,7 +33,7 @@ func (s *Service) UserUpdate(user *models.User) error {
 	}
 	return nil
 }
-func (s *Service) UserDelete(id int64) error {
+func (s *Service) UserDelete(id int) error {
 	_, err := s.DB.NewDelete().Model((*models.User)(nil)).
 		Where("id = ?", id).Exec(s.ctx)
 	if err != nil {

@@ -24,7 +24,7 @@ func (h *Handler) CommentAll(c *gin.Context) {
 	c.JSON(200, &comments)
 }
 func (h *Handler) CommentGet(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.String(400, "id of comment is invalid")
 		return
@@ -37,7 +37,7 @@ func (h *Handler) CommentGet(c *gin.Context) {
 	c.JSON(200, comment)
 }
 func (h *Handler) CommentUpdate(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.String(400, "id of comment is invalid")
 		return
@@ -53,7 +53,7 @@ func (h *Handler) CommentUpdate(c *gin.Context) {
 	c.JSON(200, comment)
 }
 func (h *Handler) CommentDelete(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.String(400, "id of comment is invalid")
 		return

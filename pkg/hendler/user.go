@@ -89,7 +89,7 @@ func (h *Handler) ParseTokenAndRequiredSetUserID(c *gin.Context) {
 	}
 	c.Set("userID", userID)
 }
-func (h *Handler) getUserID(c *gin.Context) int64 {
+func (h *Handler) getUserID(c *gin.Context) int {
 	userID, _ := c.Get("userID")
-	return userID.(int64)
+	return userID.(int)
 }

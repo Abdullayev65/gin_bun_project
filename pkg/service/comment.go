@@ -11,7 +11,7 @@ func (s *Service) CommentAdd(comment *models.Comment) error {
 	}
 	return nil
 }
-func (s *Service) CommentGet(id int64) (*models.Comment, error) {
+func (s *Service) CommentGet(id int) (*models.Comment, error) {
 	comment := &models.Comment{ID: id}
 	err := s.DB.NewSelect().Model(comment).WherePK().Scan(s.ctx)
 	if err != nil {
@@ -33,7 +33,7 @@ func (s *Service) CommentUpdate(comment *models.Comment) error {
 	}
 	return nil
 }
-func (s *Service) CommentDelete(id int64) error {
+func (s *Service) CommentDelete(id int) error {
 	_, err := s.DB.NewDelete().Model((*models.Comment)(nil)).
 		Where("id = ?", id).Exec(s.ctx)
 	if err != nil {

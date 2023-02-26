@@ -12,7 +12,7 @@ func (h *Handler) PostAdd(c *gin.Context) {
 	var postInput io.PostInput
 	c.Bind(&postInput)
 	post := &models.Post{UserID: userID, Description: postInput.Description}
-	err := h.Service.PostAdd(post)
+	err := h.Service.PostAdd(post, postInput.AttachmentIDs)
 	if err != nil {
 		c.String(400, err.Error())
 		return
@@ -24,7 +24,7 @@ func (h *Handler) PostAll(c *gin.Context) {
 	c.JSON(200, &posts)
 }
 func (h *Handler) PostGet(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.String(400, "id of post is invalid")
 		return
@@ -39,7 +39,7 @@ func (h *Handler) PostGet(c *gin.Context) {
 func (h *Handler) PostUpdate(c *gin.Context) {
 	var postInput io.PostInput
 	c.Bind(&postInput)
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.String(400, "id of post is invalid")
 		return
@@ -53,7 +53,7 @@ func (h *Handler) PostUpdate(c *gin.Context) {
 	c.JSON(200, post)
 }
 func (h *Handler) PostDelete(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.String(400, "id of post is invalid")
 		return

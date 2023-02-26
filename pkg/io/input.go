@@ -5,9 +5,10 @@ type Sign struct {
 	Password string `json:"password"`
 }
 type PostInput struct {
-	Description string `json:"description"`
+	Description   string `json:"description"`
+	AttachmentIDs []int  `json:"attachmentIDs"`
 }
 type CommentInput struct {
-	PostID int64  `json:"post_id"`
+	PostID int    `json:"post_id"`
 	Text   string `json:"text"`
 }

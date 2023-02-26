@@ -16,16 +16,16 @@ func NewToken(signingKey string, expiryInterval time.Duration) *TokenJWT {
 	return &TokenJWT{signingKey: []byte(signingKey), ExpiryInterval: expiryInterval}
 }
 
-func (t *TokenJWT) Generate(sub int64) (string, error) {
-	return t.generate(strconv.FormatInt(sub, 10))
+func (t *TokenJWT) Generate(sub int) (string, error) {
+	return t.generate(strconv.Itoa(sub))
 }
 
-func (t *TokenJWT) Parse(tokenStr string) (int64, error) {
+func (t *TokenJWT) Parse(tokenStr string) (int, error) {
 	subStr, err := t.parse(tokenStr)
 	if err != nil {
 		return 0, err
 	}
-	sub, err := strconv.ParseInt(subStr, 10, 64)
+	sub, err := strconv.Atoi(subStr)
 	if err != nil {
 		return 0, err
 	}
