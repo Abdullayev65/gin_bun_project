@@ -40,6 +40,13 @@ func (s *Service) PostAll() []models.Post {
 		Relation("Attachments").Scan(s.ctx)
 	return posts
 }
+func (s *Service) PostAllByUserID(userID int) []models.Post {
+	var posts []models.Post
+	s.DB.NewSelect().Model(&posts).
+		Relation("Attachments").
+		Where("user_id = ", userID).Scan(s.ctx)
+	return posts
+}
 
 func (s *Service) PostUpdate(post *models.Post, attachmentIDs []int) error {
 	_, err := s.DB.NewUpdate().Model(post).

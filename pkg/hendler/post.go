@@ -28,6 +28,15 @@ func (h *Handler) PostAll(c *gin.Context) {
 	}
 	c.JSON(200, &postOuts)
 }
+func (h *Handler) PostAllByUserID(c *gin.Context) {
+	userID := h.getUserID(c)
+	posts := h.Service.PostAllByUserID(userID)
+	postOuts := make([]*io.PostOutput, 0, len(posts))
+	for _, p := range posts {
+		postOuts = append(postOuts, io.NewPostOutput(&p))
+	}
+	c.JSON(200, &postOuts)
+}
 func (h *Handler) PostGet(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

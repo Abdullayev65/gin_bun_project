@@ -32,6 +32,22 @@ func UploadFiles(fsMap map[string][]*multipart.FileHeader) []models.Attachment {
 	}
 	return attachs
 }
+func UploadFile(OneFile *multipart.FileHeader) *models.Attachment {
+	file, err := OneFile.Open()
+	if err != nil {
+		return nil
+	}
+	pathFile := generatePathAndCheckDir(OneFile.Filename)
+	err = copyTo(pathFile, file)
+	if err != nil {
+		return nil
+	}
+
+	attachment := models.Attachment{
+		FileName: OneFile.Filename, Path: pathFile}
+
+	return &attachment
+}
 
 func generatePathAndCheckDir(name string) (pathFile string) {
 	pathDir, fileName := generatePath(name)

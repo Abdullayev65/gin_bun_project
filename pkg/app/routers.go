@@ -24,6 +24,8 @@ func (a *App) initRouters() *gin.Engine {
 	{
 		post.POST("/", a.handler.ParseTokenAndRequiredSetUserID,
 			a.handler.PostAdd)
+		post.GET("/", a.MW.SetInt("userID"),
+			a.handler.PostAllByUserID)
 		post.GET("/", a.handler.PostAll)
 		post.GET("/:id", a.handler.PostGet)
 		post.PUT("/:id", a.handler.PostUpdate)
