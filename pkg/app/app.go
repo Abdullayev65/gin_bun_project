@@ -18,7 +18,7 @@ type App struct {
 func New() *App {
 	db, ctx := database()
 	s := service.New(db, ctx)
-	t := utill.NewToken("salat", time.Hour*6)
+	t := utill.NewToken("salat", time.Hour*26)
 	return &App{handler: hendler.New(s, t)}
 }
 

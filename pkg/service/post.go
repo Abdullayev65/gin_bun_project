@@ -14,9 +14,12 @@ func (s *Service) PostAdd(post *models.Post, attachmentIDs []int) error {
 		for _, aID := range attachmentIDs {
 			postAttachs = append(postAttachs, models.PostAttachment{PostID: post.ID, AttachmentID: aID})
 		}
-		_, err = s.DB.NewInsert().Model(postAttachs).Exec(s.ctx)
+		_, err = s.DB.NewInsert().Model(&postAttachs).Exec(s.ctx)
 		if err != nil {
 			return err
+		}
+		for _, aID := range attachmentIDs {
+			post.Attachments = append(post.Attachments, models.Attachment{ID: aID})
 		}
 	}
 	return nil

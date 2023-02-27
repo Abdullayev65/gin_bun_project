@@ -17,11 +17,16 @@ func (h *Handler) PostAdd(c *gin.Context) {
 		c.String(400, err.Error())
 		return
 	}
-	c.JSON(200, post)
+	postOutput := io.NewPostOutput(post)
+	c.JSON(200, postOutput)
 }
 func (h *Handler) PostAll(c *gin.Context) {
 	posts := h.Service.PostAll()
-	c.JSON(200, &posts)
+	postOuts := make([]*io.PostOutput, 0, len(posts))
+	for _, p := range posts {
+		postOuts = append(postOuts, io.NewPostOutput(&p))
+	}
+	c.JSON(200, &postOuts)
 }
 func (h *Handler) PostGet(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
@@ -34,7 +39,8 @@ func (h *Handler) PostGet(c *gin.Context) {
 		c.String(400, err.Error())
 		return
 	}
-	c.JSON(200, post)
+	postOutput := io.NewPostOutput(post)
+	c.JSON(200, postOutput)
 }
 func (h *Handler) PostUpdate(c *gin.Context) {
 	var postInput io.PostInput
@@ -45,12 +51,13 @@ func (h *Handler) PostUpdate(c *gin.Context) {
 		return
 	}
 	post := &models.Post{ID: id, Description: postInput.Description}
-	err = h.Service.PostUpdate(post)
+	err = h.Service.PostUpdate(post, postInput.AttachmentIDs)
 	if err != nil {
 		c.String(400, err.Error())
 		return
 	}
-	c.JSON(200, post)
+	postOutput := io.NewPostOutput(post)
+	c.JSON(200, postOutput)
 }
 func (h *Handler) PostDelete(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
